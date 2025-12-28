@@ -1,4 +1,4 @@
-from loader import FileLoader
+from .loader import FileLoader
 from typing import Generator
 
 class LogParser():
@@ -23,7 +23,7 @@ class LogParser():
             }
         ]
     def parse(self,filepath) -> Generator:
-        log_lines = FileLoader.loader(filepath=filepath)
+        log_lines = FileLoader.load(filepath=filepath)
         for num,line in enumerate(log_lines):
             line = line.strip()
             for rule in self.rules:
@@ -32,7 +32,8 @@ class LogParser():
                         "line_content": line,
                         "level": rule["level"],
                         "category": rule["category"],
-                        "line_no": num + 1
+                        "line_no": num + 1,
+                        "pattern": rule["pattern"]
                     }
                     yield mes_dict
 
