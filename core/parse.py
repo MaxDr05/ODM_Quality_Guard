@@ -1,7 +1,7 @@
-from Loader import FileLoader
+from loader import FileLoader
 from typing import Generator
 
-class LogParse():
+class LogParser():
     def __init__(self,rules:list = None):
         self.rules = rules
         if self.rules is None:

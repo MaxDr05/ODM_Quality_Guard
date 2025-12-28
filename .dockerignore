@@ -1,0 +1,14 @@
+.gitignore
+.git
+
+*.pyc
+__pycache__
+
+output/
+logs/
+report/
+
+venv/
+.env
+
+.idea/
