@@ -15,3 +15,5 @@ ENV/
 # 其他
 *.log
 .DS_Store
+
+./report
