@@ -23,7 +23,7 @@ class LogParser():
             }
         ]
     def parse(self,filepath) -> Generator:
-        log_lines = FileLoader.load(filepath=filepath)
+        log_lines = FileLoader.load(logdir=filepath)
         for num,line in enumerate(log_lines):
             line = line.strip()
             for rule in self.rules:
