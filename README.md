@@ -2,7 +2,7 @@
 
 **基于流式处理的日志分析引擎 (Stream-based Log Analyzer)**
 
-> 此组件是 [ODM Distributed Test System](https://github.com/your-infra-repo) 的分析单元。
+> 此组件是 [ODM Distributed Test System](https://github.com/MaxDr05/ODM_Infrastructure.git) 的分析单元。
 
 ## 1. 设计理念 (Design Philosophy)
 不同于传统的 grep 脚本，本模块采用**代码即配置 (Configuration as Code)** 的思路，将日志分析逻辑封装为可测试、可扩展的 Python 对象。
