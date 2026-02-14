@@ -5,26 +5,26 @@ class FileLoader():
     def __init__(self):
         pass
 
-    # 目的是逐行吐出日志文件，具体解析操作交给parse
+    # 返回文件名列表
     @staticmethod
-    def load(logdir:str) -> Generator:
+    def get_log_files(logdir:str) -> list:
         search_pattern = os.path.join(logdir,'*.log')
         file_list = glob.glob(search_pattern)
 
-        print(f"[FileLoader] Scanning directory: {logdir}")
-        print(f"[FileLoader] Found files: {file_list}")
-
-        # 避免无文件造成的异常通过
+        # 校验无日志情况-直接报错
         if not file_list:
-            print(f"[WARN] No .log files found in {logdir}")
-            raise FileNotFoundError(f"No .log files found in {logdir}. Did the Runner fail?")
+            error_msg = f"[FATAL] No log files found in {logdir}!"
+            print(error_msg)
+            raise RuntimeError(error_msg)
 
-        for filepath in file_list:
-            print(f"[FileLoader] Reading: {filepath}")
+        return sorted(file_list)
 
-            # 避免空文件造成的异常通过
-            if os.path.getsize(filepath) == 0:
-                raise ValueError(f"Log file is empty: {filepath}. Test execution might have failed silently.")
-            with open(filepath,"r",encoding="utf-8",errors="ignore") as f:
-                for line in f:
-                    yield line
+    # 读取单个文件，给具体的测试用例用
+    @staticmethod
+    def load_single_file(filepath):
+        if os.path.getsize(filepath) == 0:
+            return
+
+        with open(filepath,"r",encoding="utf-8",errors="ignore") as f:
+            for line in f:
+                yield line

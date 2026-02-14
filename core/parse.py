@@ -22,18 +22,19 @@ class LogParser():
                 "category": "Network"
             }
         ]
-    def parse(self,filepath) -> Generator:
-        log_lines = FileLoader.load(logdir=filepath)
+    def parse_file(self,filepath) -> Generator:
+        log_lines = FileLoader.load_single_file(filepath)
         for num,line in enumerate(log_lines):
             line = line.strip()
             for rule in self.rules:
-                if rule["pattern"] in line.strip():
+                if rule["pattern"] in line:
                     mes_dict = {
                         "line_content": line,
                         "level": rule["level"],
                         "category": rule["category"],
                         "line_no": num + 1,
-                        "pattern": rule["pattern"]
+                        "pattern": rule["pattern"],
+                        "source_file" : filepath
                     }
                     yield mes_dict
 
