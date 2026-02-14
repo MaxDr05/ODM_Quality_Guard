@@ -22,12 +22,11 @@ class TestMTBF():
     @allure.story("Performance")
     @allure.title("memory leak")
     @allure.severity(allure.severity_level.NORMAL)
-    def test_memory_leak(self,logparse):
-        with allure.step("scan memory leak in log"):
-            for msg in logparse:
-                if "Performance" == msg["category"] and "memory leak" == msg["pattern"]:
-                    allure.attach(json.dumps(msg), "error msg", attachment_type=allure.attachment_type.JSON)
-                    assert False
-            assert True
-            # 拓展写法
-            # assert not any(msg["category"] == "Performance" and msg["pattern"] == "memory leak" for msg in logparse),"found memory leak log!"
+    def test_memory_leak(self,device_log_path):
+        parser = LogParser()
+        error_logs = list(parser.parse_file(device_log_path))
+        with allure.step(f"scan log:{device_log_path}"):
+            for msg in error_logs:
+                if "memory leak" == msg["category"]:
+                    allure.attach(json.dumps(msg),"error msg",attachment_type=allure.attachment_type.JSON)
+                    pytest.fail(f"memory leak detected! Pattern:{msg['pattern']}")
